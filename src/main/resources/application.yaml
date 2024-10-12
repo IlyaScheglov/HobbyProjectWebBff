@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: FrontWebBff
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 15MB
+      max-request-size: 15MB
+  memcached:
+    host: localhost
+    port: 11211
+    ttl-seconds: 300
+
+server:
+  port: 8081
+
+image-service:
+  url: localhost:8083
+
+auth-service:
+  url: localhost:8084
