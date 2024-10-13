@@ -17,13 +17,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AspectRequestsWithAuthInterceptor {
 
+    private static final String AUTH_HEADER_NAME = "Authorization";
+
     private final AuthFeignClient authFeignClient;
 
     @Before("@annotation(com.github.ilyxahobby.FrontWebBff.config.authconf.NeedAuth)")
     @SneakyThrows
     public void authInterceptorRealization(JoinPoint joinPoint) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String jwt = "getJwt";
+        String jwt = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest().getHeader(AUTH_HEADER_NAME);
         UUID userId = authFeignClient.tryDoRequest(jwt);
 
         if (userId == null) {

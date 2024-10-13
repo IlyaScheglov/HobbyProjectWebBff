@@ -2,6 +2,7 @@ package com.github.ilyxahobby.FrontWebBff.service;
 
 import com.github.ilyxahobby.FrontWebBff.dto.myimages.ImageDto;
 import com.github.ilyxahobby.FrontWebBff.feign.myimages.client.MyImagesFeignClient;
+import io.github.ilyascheglov.memcached_aspect_starter.aspect.annotations.MemCacheEvict;
 import io.github.ilyascheglov.memcached_aspect_starter.aspect.annotations.MemCacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,8 @@ public class ImagesService {
         return myImagesFeignClient.getMyPhotos(userId);
     }
 
-    public ImageDto addNewImage(String title, MultipartFile image) {
+    @MemCacheEvict(prefix = "Images", keyArgumentName = "userId")
+    public ImageDto addNewImage(String title, MultipartFile image, UUID userId) {
         return myImagesFeignClient.addNewPhoto(title, image);
-    }
-
-    @MemCacheable(prefix = "Test", keyArgumentName = "key")
-    public String test(int key) {
-        System.out.println("blyat");
-        return "test";
     }
 }

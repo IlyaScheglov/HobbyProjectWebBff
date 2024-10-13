@@ -4,7 +4,11 @@ import java.util.UUID;
 
 public abstract class AbstractControllerWithAuth {
 
-    private UUID userId = null;
+    private UUID userId;
+
+    public AbstractControllerWithAuth() {
+        this.userId = null;
+    }
 
     protected UUID getUserId() {
         return userId;

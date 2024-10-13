@@ -13,6 +13,6 @@ import java.util.UUID;
 )
 public interface AuthFeignClient {
 
-    @GetMapping
+    @GetMapping("/auth-service/api/v1/auth")
     UUID tryDoRequest(@RequestHeader String jwtToken);
 }

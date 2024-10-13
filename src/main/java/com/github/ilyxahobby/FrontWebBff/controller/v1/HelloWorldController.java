@@ -18,7 +18,7 @@ public class HelloWorldController {
     @GetMapping("/get-hello-message")
     public ResponseEntity<HelloWorldDto> helloWorld() {
         return ResponseEntity.ok(HelloWorldDto.builder()
-                .message(imagesService.test(1))
+                .message("hello world")
                 .build());
     }
 }

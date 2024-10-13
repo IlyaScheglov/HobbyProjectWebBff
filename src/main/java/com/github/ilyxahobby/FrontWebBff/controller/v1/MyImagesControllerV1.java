@@ -20,11 +20,10 @@ public class MyImagesControllerV1 extends AbstractControllerWithAuth {
     private final ImagesService imagesService;
     private final MyImagesMapperImpl myImagesMapper;
 
-    @GetMapping("/{userId}")
+    @GetMapping
     @NeedAuth
     public ResponseEntity<MyImagesResponse> getMyImages() {
-        var userId = this.getUserId();
-        var images = imagesService.getMyImages(userId);
+        var images = imagesService.getMyImages(getUserId());
         var imagesResponse = myImagesMapper.mapToSecondDto(images);
 
         return ResponseEntity.ok(imagesResponse);
@@ -33,6 +32,6 @@ public class MyImagesControllerV1 extends AbstractControllerWithAuth {
     @PostMapping(consumes = { "multipart/form-data" })
     @NeedAuth
     public ResponseEntity<ImageDto> addNewImage(@RequestParam String title, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(imagesService.addNewImage(title, image));
+        return ResponseEntity.ok(imagesService.addNewImage(title, image, getUserId()));
     }
 }
